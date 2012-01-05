@@ -56,6 +56,7 @@ Putio = {
             });
         }
     },
+    
     Message : {
         list : function(output) {
             Putio._request('messages', 'list','',function(data){
@@ -146,6 +147,45 @@ Putio = {
         }
     },
 
+    Subscriptions : {
+        list : function(links,output) {
+            Putio._request('subscriptions', 'list', {
+            },function(data){
+                output(data);
+            });
+        },
+        create : function(){
+            Putio._request('subscriptions', 'create', {
+            },function(data){
+                output(data);
+            });
+        },
+        edit : function(){
+            Putio._request('subscriptions', 'edit', {
+            },function(data){
+                output(data);
+            });
+        },
+        del : function(){
+            Putio._request('subscriptions', 'delete', {
+            },function(data){
+                output(data);
+            });
+        },
+        pause : function(){
+            Putio._request('subscriptions', 'pause', {
+            },function(data){
+                output(data);
+            });
+        },
+        info : function(){
+            Putio._request('subscriptions', 'info', {
+            },function(data){
+                output(data);
+            });
+        }
+    },
+
     ApiRequest :function(api_key, api_secret, params) {
         if (!api_key || !api_secret) {
             return; //undefined
@@ -211,6 +251,7 @@ Putio = {
         });
 
     },
+    
     request_google : function(type, name, output) {
         var search;
         name=name.replace(" ", "%20")
