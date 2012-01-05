@@ -34,7 +34,7 @@ Function = {
                     'Put.io"></div></div>');
                 break;
             case 'dashboard':
-                $(".content").html('<div id="messages_list"></div>')
+                $(".content").html('<div id="messages_list"></div>');
                 Putio.Message.list(function(data){
                     var results=data.response.results;
                     $.each(results,function(index, value){
@@ -48,12 +48,12 @@ Function = {
                         $("#messages_list a").removeAttr("rel");
                         $("#messages_list a").css('font-weight', 'bold');
 
-                    })
+                    });
                 });
 
                 break;
             case 'transfers':
-                $(".content").html('<div id="root"></div>')
+                $(".content").html('<div id="root"></div>');
                 Function.transfert_list();
                 break;
             case 'files':
@@ -61,6 +61,13 @@ Function = {
                     'id="search_query" value="search"/><input type="submit" '+
                     'id="send_search" value=">"></div><div id="root"></div>')
                 Function.gotofolder('0');
+                break;
+            case 'subscriptions':
+                $(".content").html('<div id="subs"></div>');
+                Putio.Subscriptions.list(function(data){
+                   var results = data.response.results;
+                   $("#subs").html("tst :" + results[0].name);
+                });
                 break;
             case 'account':
                 $(".content").html('<div><div id="info_name"><div class="info">'+
