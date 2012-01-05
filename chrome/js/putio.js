@@ -51,6 +51,7 @@ Putio = {
             var params = {
                 'txt' : text
             };
+            
             Putio._request('urls', 'extracturls', params,function(data){
                 output(data);
             });
@@ -92,6 +93,7 @@ Putio = {
                 'id' : id,
                 'name':name
             };
+            
             Putio._request('files', 'rename',params,function(data){
                 output(data);
             });
@@ -101,6 +103,7 @@ Putio = {
                 'id' : id,
                 'parent_id' : parent_id
             };
+            
             Putio._request('files', 'move', params,function(data){
                 output(data);
             });
@@ -109,6 +112,7 @@ Putio = {
             var params = {
                 'id' : id
             };
+            
             Putio._request('files', 'delete',params,function(data){
                 output(data);
             });
@@ -117,7 +121,6 @@ Putio = {
             var params = {
                 'parent_id': parent_id,
                 'orderby':'type_desc'
-
             };
 
             Putio._request('files', 'list', params,function(data){
@@ -128,7 +131,6 @@ Putio = {
             var params = {
                 'name': name,
                 'parent_id':parent_id
-
             };
 
             Putio._request('files', 'create_dir', params,function(data){
@@ -138,7 +140,6 @@ Putio = {
         search : function(query,output) {
             var params = {
                 'query': query
-
             };
 
             Putio._request('files', 'search', params,function(data){
@@ -154,33 +155,59 @@ Putio = {
                 output(data);
             });
         },
-        create : function(){
-            Putio._request('subscriptions', 'create', {
-            },function(data){
+        create : function(title, url, do_filters, dont_filters, parent_folder_id, paused, output){
+            var params = {
+                'title' : title,
+                'url' : url,
+                'do_filters' : do_filters,
+                'dont_filters' : dont_filters,
+                'parent_folder_id' : parent_folder_id,
+                'paused' : paused
+            };
+            
+            Putio._request('subscriptions', 'create', params, function(data){
                 output(data);
             });
         },
-        edit : function(){
-            Putio._request('subscriptions', 'edit', {
-            },function(data){
+        edit : function(id, title, url, do_filters, dont_filters, parent_folder_id, paused, output){
+            var params = {
+                'id' : id,
+                'title' : title,
+                'url' : url,
+                'do_filters' : do_filters,
+                'dont_filters' : dont_filters,
+                'parent_folder_id' : parent_folder_id,
+                'paused' : paused
+            };
+            
+            Putio._request('subscriptions', 'edit', params, function(data){
                 output(data);
             });
         },
-        del : function(){
-            Putio._request('subscriptions', 'delete', {
-            },function(data){
+        del : function(id, output){
+            var params = {
+                'id' : id
+            };
+            
+            Putio._request('subscriptions', 'delete', params, function(data){
                 output(data);
             });
         },
-        pause : function(){
-            Putio._request('subscriptions', 'pause', {
-            },function(data){
+        pause : function(id, output){
+            var params = {
+                'id' : id
+            };
+            
+            Putio._request('subscriptions', 'pause', params, function(data){
                 output(data);
             });
         },
-        info : function(){
-            Putio._request('subscriptions', 'info', {
-            },function(data){
+        info : function(id, output){
+            var params = {
+                'id' : id
+            };
+            
+            Putio._request('subscriptions', 'info', params, function(data){
                 output(data);
             });
         }
