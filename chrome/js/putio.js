@@ -10,30 +10,34 @@ Putio = {
 
     User : {
         info : function(output) {
-            Putio._request('user', 'info','',function(data){
+            Putio._request('user', 'info', {}, function(data){
                 output(data);
             });
         }
     },
 
     Transfer : {
-        add : function(links,folder_id,output) {
-            Putio._request('transfers', 'add', {
+        add : function(links, folder_id, output) {
+            var params = {
                 'links' : links,
                 'to_folder' : folder_id
-            },function(data){
+            };
+            
+            Putio._request('transfers', 'add', params, function(data){
                 output(data);
             });
         },
         list : function(output) {
-            Putio._request('transfers', 'list','',function(data){
+            Putio._request('transfers', 'list', {}, function(data){
                 output(data);
             });
         },
-        cancel : function(transfert_id,output) {
-            Putio._request('transfers', 'cancel', {
+        cancel : function(transfert_id, output) {
+            var params = {
                 'id' : transfert_id
-            },function(data){
+            };
+            
+            Putio._request('transfers', 'cancel', params, function(data){
                 output(data);
             });
         }
@@ -41,9 +45,11 @@ Putio = {
 
     Url : {
         analyze : function(links,output) {
-            Putio._request('urls', 'analyze', {
+            var params = {
                 'links' : links
-            },function(data){
+            };
+            
+            Putio._request('urls', 'analyze', params, function(data){
                 output(data);
             });
         },
@@ -52,7 +58,7 @@ Putio = {
                 'txt' : text
             };
             
-            Putio._request('urls', 'extracturls', params,function(data){
+            Putio._request('urls', 'extracturls', params, function(data){
                 output(data);
             });
         }
@@ -60,14 +66,16 @@ Putio = {
     
     Message : {
         list : function(output) {
-            Putio._request('messages', 'list','',function(data){
+            Putio._request('messages', 'list', {}, function(data){
                 output(data);
             });
         },
         del : function(transfert_id,output) {
-            Putio._request('messages', 'delete', {
+            var params = {
                 'id' : transfert_id
-            },function(data){
+            };
+            
+            Putio._request('messages', 'delete', params, function(data){
                 output(data);
             });
         }
@@ -75,7 +83,7 @@ Putio = {
 
     File : {
         dirmap : function(output) {
-            Putio._request('files', 'dirmap','',function(data){
+            Putio._request('files', 'dirmap', {}, function(data){
                 output(data);
             });
         },
@@ -84,7 +92,7 @@ Putio = {
                 "id": id
             };
 
-            Putio._request('files', 'info', params,function(data){
+            Putio._request('files', 'info', params, function(data){
                 output(data);
             });
         },
@@ -94,7 +102,7 @@ Putio = {
                 'name':name
             };
             
-            Putio._request('files', 'rename',params,function(data){
+            Putio._request('files', 'rename', params, function(data){
                 output(data);
             });
         },
@@ -104,7 +112,7 @@ Putio = {
                 'parent_id' : parent_id
             };
             
-            Putio._request('files', 'move', params,function(data){
+            Putio._request('files', 'move', params, function(data){
                 output(data);
             });
         },
@@ -113,7 +121,7 @@ Putio = {
                 'id' : id
             };
             
-            Putio._request('files', 'delete',params,function(data){
+            Putio._request('files', 'delete', params, function(data){
                 output(data);
             });
         },
@@ -123,17 +131,17 @@ Putio = {
                 'orderby':'type_desc'
             };
 
-            Putio._request('files', 'list', params,function(data){
+            Putio._request('files', 'list', params, function(data){
                 output(data);
             });
         },
-        create_dir : function(parent_id,name,output) {
+        create_dir : function(parent_id, name, output) {
             var params = {
                 'name': name,
                 'parent_id':parent_id
             };
 
-            Putio._request('files', 'create_dir', params,function(data){
+            Putio._request('files', 'create_dir', params, function(data){
                 output(data);
             });
         },
@@ -142,16 +150,15 @@ Putio = {
                 'query': query
             };
 
-            Putio._request('files', 'search', params,function(data){
+            Putio._request('files', 'search', params, function(data){
                 output(data);
             });
         }
     },
 
     Subscriptions : {
-        list : function(links,output) {
-            Putio._request('subscriptions', 'list', {
-            },function(data){
+        list : function(output) {
+            Putio._request('subscriptions', 'list', {}, function(data){
                 output(data);
             });
         },
@@ -213,7 +220,7 @@ Putio = {
         }
     },
 
-    ApiRequest :function(api_key, api_secret, params) {
+    ApiRequest : function(api_key, api_secret, params) {
         if (!api_key || !api_secret) {
             return; //undefined
         }
