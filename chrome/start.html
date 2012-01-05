@@ -9,6 +9,21 @@
         <script type="text/javascript" src="js/function.js"></script>
         <script type="text/javascript" src="js/putio.js"></script>
 
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-10536784-4']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = 'https://ssl.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            function trackButton(button_id) {
+                _gaq.push(['_trackEvent', 'button' + button_id, 'clicked']);
+            };
+        </script>
 
     </head>
     <body>
@@ -19,6 +34,7 @@
                 <a href="#" onclick="trackButton('Dashboard');" id="dashboard">Dashboard</a>
                 <a href="#" onclick="trackButton('Transfers');" id="transfers">Transfers</a>
                 <a href="#" onclick="trackButton('Files');" id="files">Files</a>
+                <a href="#" onclick="trackButton('Subscriptions');" id="subscriptions">Subscriptions</a>
                 <a href="#" onclick="trackButton('Account');" id="account">Account</a>
                 <a href="#" onclick="trackButton('Config');" id="config">Config</a>
             </div>
@@ -39,18 +55,3 @@
         </div>
     </body>
 </html>
-<script>
-     var _gaq = _gaq || [];
-     _gaq.push(['_setAccount', 'UA-10536784-4']);
-     _gaq.push(['_trackPageview']);
-
-     (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = 'https://ssl.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-     })();
-
-     function trackButton(button_id) {
-    _gaq.push(['_trackEvent', 'button' + button_id, 'clicked']);
-  };
-   </script>
