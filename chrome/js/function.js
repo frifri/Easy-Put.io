@@ -65,10 +65,15 @@ Function = {
             case 'subscriptions':
                 $(".content").html('<div id="subs"></div>');
                 Putio.Subscriptions.list(function(data){
-                   var results = data.response.results;
-                   $.each(results, function(index, value){
-                       $("#subs").append(index + " : " + value.name + "<br />");
-                   });
+                    var results = data.response.results;
+                    $.each(results, function(index, value){
+                    $("#subs").append("<div class='sub_container' sub_id='" + value.id + 
+                        "'><div class='subs_icon' />" + value.name + "<div class='editSub'>"+
+                        "<img class='rename' src='img/rename.png'>"+
+                        "<img class='delete' src='img/delete.png'></div>"+
+                        "</div>");
+                        console.log(value);
+                    });
                 });
                 break;
             case 'account':
