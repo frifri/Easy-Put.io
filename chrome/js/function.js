@@ -66,7 +66,9 @@ Function = {
                 $(".content").html('<div id="subs"></div>');
                 Putio.Subscriptions.list(function(data){
                    var results = data.response.results;
-                   $("#subs").html("tst :" + results[0].name);
+                   $.each(results, function(index, value){
+                       $("#subs").append(index + " : " + value.name + "<br />");
+                   });
                 });
                 break;
             case 'account':
