@@ -63,16 +63,21 @@ Function = {
                 Function.gotofolder('0');
                 break;
             case 'subscriptions':
+                // Adding the main subscription div.
                 $(".content").html('<div id="subs"></div>');
+                
+                // Getting the subscription list
                 Putio.Subscriptions.list(function(data){
                     var results = data.response.results;
+                    
+                    // For each subscription
                     $.each(results, function(index, value){
-                    $("#subs").append("<div class='sub_container' sub_id='" + value.id + 
-                        "'><div class='subs_icon' />" + value.name + "<div class='editSub'>"+
-                        "<img class='rename' src='img/rename.png'>"+
-                        "<img class='delete' src='img/delete.png'></div>"+
-                        "</div>");
-                        console.log(value);
+                        // A subscription block
+                        $("#subs").append("<div class='sub_container' sub_id='" + value.id + "'>" + 
+                            "<div class='subs_icon' />" + value.name + "<div class='editSub'>" +
+                            "<img class='modSub' src='img/rename.png'>" +
+                            "<img class='delSub' src='img/delete.png'></div>" +
+                            "</div>");
                     });
                 });
                 break;

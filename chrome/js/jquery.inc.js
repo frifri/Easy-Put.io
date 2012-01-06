@@ -57,49 +57,95 @@ $(document).ready(function() {
         $("#input_popup").html('<input id="input_value" type="text" value="'+name+'">')
         $("#valid_popup").html('<img id="valid" type="rename" value="'+id+'" src="img/valid.png">')
     });
-
+    
+    // Edition popup for a subscription
+    $(".modSub").live("click", function(){
+        var curSubId = $(this).parent().parent().attr('sub_id');
+        
+        $('#popup').show();
+        
+        Putio.Subscriptions.info(curSubId, function(data) {
+            var curSub = data.response.results[0];
+            $("#text_popup").html("Name : <input id='sub_name' type='text' value='" + curSub.name + "' /><br />" +
+                "URL : <input id='sub_url' type='text' value='" + curSub.url + "' /><br />" +
+                "Destination folder : <select id='folder_id'></select><br />" +
+                "Download files WITH these words : <input id='sub_do_filters' type='text' value='" + curSub.do_filters + "' /><br />" +
+                "DO NOT download files WITH these words : <input id='sub_dont_filters' type='text' value='" + curSub.dont_filters + "' /><br />" +
+                "<div id='validSub' type='modify' value='" + curSub.id + "' />")
+            
+            // Filling the directory list
+            $("#folder_id").html('<option value="0">/</option>')
+            Putio.File.dirmap(function(data){
+                results=data.response.results;
+                Function.folderlist('',results);
+            })
+        });
+    });
 
     $(".move").live("click", function(){
         var id=$(this).attr("id");
         var name=$("#name_"+id).attr("name");
         $('#popup').show();
-        $("#text_popup").html('Move '+name+' to :')
-        $("#input_popup").html('Move '+name+' to :')
-        $("#input_popup").html('<select id="folder_id"></select>')
-        $("#folder_id").html('<option value="0">/</option>')
+        $("#text_popup").html('Move '+name+' to :');
+        $("#input_popup").html('Move '+name+' to :');
+        $("#input_popup").html('<select id="folder_id"></select>');
+        $("#folder_id").html('<option value="0">/</option>');
         Putio.File.dirmap(function(data){
             results=data.response.results;
             Function.folderlist('',results);
-        })
-        $("#valid_popup").html('<img id="valid" type="move" value="'+id+'" src="img/valid.png">')
+        });
+        $("#valid_popup").html('<img id="valid" type="move" value="'+id+'" src="img/valid.png">');
     });
 
     $(".delete").live("click", function(){
         var id=$(this).attr("id");
         var name=$("#name_"+id).attr("name");
         $('#popup').show();
-        $("#text_popup").html('Are you sure you want to delete file '+name+'?')
-        $("#input_popup").html('<img id="valid" type="delete" value="'+id+'" src="img/valid.png"><img id="close" src="img/delete.png">')
-        $("#valid_popup").html('')
+        $("#text_popup").html('Are you sure you want to delete file '+name+'?');
+        $("#input_popup").html('<img id="valid" type="delete" value="'+id+'" src="img/valid.png"><img id="close" src="img/delete.png">');
+        $("#valid_popup").html('');
     });
 
     $(".cancel").live("click", function(){
         var id=$(this).attr("id");
         var name=$("#"+id).attr("name");
         $('#popup').show();
-        $("#text_popup").html('Are you sure you want to cancel file '+name+'?')
-        $("#input_popup").html('<img id="valid" type="cancel" value="'+id+'" src="img/valid.png"><img id="close" src="img/delete.png">')
-        $("#valid_popup").html('')
+        $("#text_popup").html('Are you sure you want to cancel file '+name+'?');
+        $("#input_popup").html('<img id="valid" type="cancel" value="'+id+'" src="img/valid.png"><img id="close" src="img/delete.png">');
+        $("#valid_popup").html('');
+    });
+    
+    $('#validSub').live("click", function() {
+        var type = $(this).attr("type");
+        
+        // Values
+        var id = $(this).attr("value");
+        var url = $('input[id=sub_url]').attr('value');
+        var title = $('input[id=sub_name]').attr('value');
+        var do_filters = $('input[id=sub_do_filters]').attr('value');
+        var dont_filters = $('input[id=sub_dont_filters]').attr('value');
+        var parent_folder_id = $('select[id=folder_id]').attr('value');
+        var paused = false;
+        
+        switch(type) {
+            case 'modify':
+                Putio.Subscriptions.edit(id, title, url, do_filters, dont_filters, parent_folder_id, paused, function(data) {
+                    if(data.error == true) {
+                        Putio._message(data.error_message, "error");
+                    }
+                });
+                break;
+        }
     });
 
     $("#valid").live("click", function(){
         var id=$(this).attr("value");
         var type=$(this).attr("type");
         var query=$('input[name=search_id]').attr('value');
-        var parent_id=$('input[name=parent_id]').attr('value')
+        var parent_id=$('input[name=parent_id]').attr('value');
+        var value=$('#folder_id').attr("value");
         switch (type) {
             case 'create':
-                var value=$('#input_value').attr("value");
                 Putio.File.create_dir(id,value,function(data){
                     if(data.error==true){
                         Putio._message(data.error_message,"error");
@@ -108,7 +154,6 @@ $(document).ready(function() {
                 })
                 break;
             case 'rename':
-                var value=$('#input_value').attr("value");
                 Putio.File.rename(id,value,function(data){
                     if(data.error==true){
                         Putio._message(data.error_message,"error");
@@ -127,7 +172,6 @@ $(document).ready(function() {
                 })
                 break;
             case 'move':
-                var value=$('#folder_id').attr("value");
                 Putio.File.move(id,value,function(data){
                     if(data.error==true){
                         Putio._message(data.error_message,"error");

@@ -248,3 +248,11 @@ body a {
 .sub_container {
     margin: 2px;
 }
+
+#validSub {
+    background-image: url(img/valid.png);
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    float: right
+}
